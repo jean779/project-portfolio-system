@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db-portfolio:
+    image: postgres:15
+    container_name: db-portfolio
+    restart: always
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: portfolio
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - postgres_data_portfolio:/var/lib/postgresql/data
+
+  app-portfolio:
+    build:
+      context: ..                         # onde está o pom.xml
+      dockerfile: docker/Dockerfile       # onde está o Dockerfile
+    container_name: app-portfolio
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-portfolio
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-portfolio:5432/portfolio
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123456
+
+volumes:
+  postgres_data_portfolio:
