@@ -5,6 +5,7 @@ import br.com.portfolio.api.exception.ResourceNotFoundException;
 import br.com.portfolio.model.Person;
 import br.com.portfolio.model.enums.RoleType;
 import br.com.portfolio.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
@@ -26,6 +27,7 @@ public class PersonService {
         return personRepository.findAll(pageable);
     }
 
+    @Transactional
     public Person createFromRequest(CreateMemberRequest request) {
         log.info("Creating new member: {}", request.getName());
 
@@ -41,6 +43,7 @@ public class PersonService {
         return saved;
     }
 
+    @Transactional
     public Person update(Long id, CreateMemberRequest request) {
         log.info("Updating member with ID: {}", id);
 
@@ -61,6 +64,7 @@ public class PersonService {
         return updated;
     }
 
+    @Transactional
     public void delete(Long id) {
         log.info("Attempting to delete member with ID: {}", id);
 
