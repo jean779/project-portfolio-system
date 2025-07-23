@@ -95,7 +95,7 @@ public class ProjectController {
                                       @RequestParam("status") ProjectStatus status,
                                       RedirectAttributes redirectAttributes) {
         projectService.updateStatus(id, status);
-        redirectAttributes.addFlashAttribute("successMessage", getMessage("projects.message.statusUpdated"));
+        redirectAttributes.addFlashAttribute("successMessage", getMessage("projects.message.successUpdated"));
         return REDIRECT_PROJECTS;
     }
 
